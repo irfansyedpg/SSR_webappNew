@@ -1,0 +1,34 @@
+
+
+{% extends "blog/base.html" %}
+{% block content %}
+{% for post in posts  %}
+
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">{{ post.author }}</a>
+      <small class="text-muted">{{ post.date_posted }}</small>
+  </div>
+
+  <p class="article-content">{{ post.content }}</p>
+</div>
+</article>
+
+{% endfor %}
+
+
+<div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="#">Rand author</a>
+      <small class="text-muted">Rand samll</small>
+  </div>
+  <form action='actionUrl' method='GET'>
+
+<button   class="article-title" type='submit'> Click Me</button>
+</form>
+
+  <p class="article-content">Random P</p>
+</div>
+
+{% endblock content %}
