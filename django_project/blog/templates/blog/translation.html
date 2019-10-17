@@ -1,0 +1,43 @@
+
+
+{% extends "blog/base.html" %}
+{% block content %}
+
+<div class="text-center" >
+{% for post in posts  %}
+
+
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href='#'> {{ post.author }}</a>
+
+      <small class="text-muted">{{ post.date_posted }}</small>
+  </div>
+
+
+  <h3 class="article-content" >{{ post.content }}</h3>
+  <p class="article-content">Confidence: {{ post.confidence }}</p>
+   <p>
+      <audio controls>
+      <source src={{ post.urll }} type="audio/mpeg">
+    </audio> </p>
+</div>
+</article>
+
+{% endfor %}
+
+
+
+
+
+  <form action='actionUrl' method='GET'>
+
+<button   class="article-title" type='submit'> Click Me</button>
+</form>
+
+  <p class="article-content">For Hard Translator</p>
+
+</div>
+
+{% endblock content %}

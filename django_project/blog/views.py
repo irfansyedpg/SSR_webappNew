@@ -28,19 +28,12 @@ bucketName = environ.get('bucketirfansyed')
 
 
 # json object
-posts = [
-    {
-        'author': 'SSR_321_321',
-        'content': 'Urdu content',
-        'date_posted': '10/16/2019'
-
-    },
-]
 
 
 def button_click(request):
 
-    get_buckets()
+    posts = []
+    posts = get_buckets()
 
     context = {
 
@@ -48,15 +41,25 @@ def button_click(request):
 
     }
     #(request,the blog i am requestin,my json object)
-    return render(request, 'blog/home.html', context)
+    return render(request, 'blog/translation.html', context)
+
+
+def translation(request):
+
+    posts = []
+    posts = get_buckets()
+    context = {
+
+        'posts': posts
+
+    }
+    #(request,the blog i am requestin,my json object)
+    return render(request, 'blog/translation.html', context)
+    # return render(request, 'blog/translation.html', {'tital': 'translation'})
 
 
 def home(request):
-    return render(request, 'blog/home.html', {'tital': 'About'})
-
-
-def about(request):
-    return render(request, 'blog/about.html', {'tital': 'About'})
+    return render(request, 'blog/home.html', {'tital': 'Home'})
 
 
 def get_buckets():
@@ -66,13 +69,16 @@ def get_buckets():
     bucket = storage_client.get_bucket('bucketirfansyed')
 
     blobs = bucket.list_blobs()
-
+    posts = []
     for blob in blobs:
         # print(blob.name)
-        transcriber(blob.name)
+        blob.make_public()
+        transcriber(blob.name, blob.updated, blob.public_url, posts)
+
+    return posts
 
 
-def transcriber(blob_name):
+def transcriber(blob_name, datee, bob_url, posts):
 
     #urll = 'gs://bucketirfansyed/SSR_8102019114925.wav'
     urll = 'gs://bucketirfansyed/' + blob_name
@@ -93,13 +99,17 @@ def transcriber(blob_name):
     response = operation.result(timeout=10000)
 
     transcrip = ""
+    confidence = 0
     for result in response.results:
         transcrip = transcrip + result.alternatives[0].transcript
+        confidence = confidence + result.alternatives[0].confidence
 
     posts.append({
-        'author': 'SSR_321_321',
+        'author': blob_name,
         'content': transcrip,
-        'date_posted': '10/16/2019'
+        'date_posted': datee,
+        'confidence': str(confidence),
+        'urll': bob_url
 
     })
-    # return transcrip
+    # return posts
