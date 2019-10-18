@@ -1,0 +1,67 @@
+
+
+{% extends "blog/base.html" %}
+{% block content %}
+
+
+
+<div class="text-center" >
+
+<article class="media content-section">
+  <div class="media-body">
+
+      <small class="text-muted">{{ datee }}</small>
+
+
+  <h3 class="article-content" >{{ text }}</h3>
+   <p>
+      <audio controls>
+      <source src={{ audi_url }} type="audio/mpeg">
+    </audio> </p>
+</div>
+</article>
+
+
+{% for post in main  %}
+
+
+<article class="media content-section">
+  <div class="media-body">
+
+
+
+  <h3 class="article-content" >{{ post.transcrip }}</h3>
+  <p class="article-content">Confidence: {{ post.confidence }}</p>
+</div>
+</article>
+
+{% endfor %}
+
+
+
+<div class="text-center" >
+
+<table  id="example" class="table table-striped table-bordered text-center" style="width:50%">
+        <thead>
+            <tr>
+                <th>Words</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Confidance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts  %}
+            <tr>
+                <td>{{ post.word }}</td>
+                <td>{{ post.start_time }}</td>
+                <td>{{ post.end_time }}</td>
+                <td>{{ post.confidence }}</td>
+
+            </tr>
+            {% endfor %}
+     </tbody>
+   </table>
+</div>
+
+{% endblock content %}
