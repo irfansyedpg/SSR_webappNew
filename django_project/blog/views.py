@@ -6,8 +6,7 @@ import os        # setting enivromental varible
 import wave      # Audio stero to mono
 from django.contrib import messages
 
-from pydub import AudioSegment  # audio import
-import pydub                  # audio import
+
 bucketname = 'bucketirfansyed'   # bucket name at google cloud
 from google.cloud import storage  # Cloud storage GCP
 
