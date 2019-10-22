@@ -125,6 +125,6 @@ STATIC_URL = '/static/'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'bucketirfansyed'
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    "C:/Users/syed.irfanullah/Desktop/speech/gcpcri.json"
-)
+
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file("gcpcri.json")
