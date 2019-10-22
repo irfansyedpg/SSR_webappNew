@@ -17,7 +17,7 @@ from django.core.files.storage import default_storage
 from django.db import models
 from os import environ
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/gcpcri.json"  # JSON file Google cloud auttenticaion
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcpcri.json"  # JSON file Google cloud auttenticaion
 
 
 class Resume(models.Model):
@@ -65,7 +65,7 @@ def home(request):
 def get_buckets():
 
     # https://medium.com/p/1dbcab23c44/responses/show
-    storage_client = storage.Client.from_service_account_json('/gcpcri.json')
+    storage_client = storage.Client.from_service_account_json('gcpcri.json')
     bucket = storage_client.get_bucket('bucketirfansyed')
 
     blobs = bucket.list_blobs()
