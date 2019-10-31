@@ -5,9 +5,10 @@ import io        # seting eniromental variable
 import os        # setting enivromental varible
 import wave      # Audio stero to mono
 from django.contrib import messages
+import pyodbc
 
 
-bucketname = 'bucketirfansyed'   # bucket name at google cloud
+bucketname = 'bucketgcssr'   # bucket name at google cloud
 from google.cloud import storage  # Cloud storage GCP
 
 import json           # Json paring
@@ -21,10 +22,10 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcpcri.json"  # JSON file Google
 
 
 class Resume(models.Model):
-    audio_file = models.FileField(upload_to='bucketirfansyed')
+    audio_file = models.FileField(upload_to='bucketgcssr')
 
 
-bucketName = environ.get('bucketirfansyed')
+bucketName = environ.get('bucketgcssr')
 
 
 # json object
@@ -66,7 +67,7 @@ def get_buckets():
 
     # https://medium.com/p/1dbcab23c44/responses/show
     storage_client = storage.Client.from_service_account_json('gcpcri.json')
-    bucket = storage_client.get_bucket('bucketirfansyed')
+    bucket = storage_client.get_bucket('bucketgcssr')
 
     blobs = bucket.list_blobs()
     posts = []
@@ -80,8 +81,8 @@ def get_buckets():
 
 def transcriber(blob_name, datee, bob_url, posts):
 
-    #urll = 'gs://bucketirfansyed/SSR_8102019114925.wav'
-    urll = 'gs://bucketirfansyed/' + blob_name
+    #urll = 'gs://bucketgcssr/SSR_8102019114925.wav'
+    urll = 'gs://bucketgcssr/' + blob_name
     from google.cloud import speech_v1p1beta1 as speech  # GCP api
     client = speech.SpeechClient()
 
@@ -93,7 +94,7 @@ def transcriber(blob_name, datee, bob_url, posts):
         enable_speaker_diarization=True,  # speaker diaraziation not working for urdu for now
         diarization_speaker_count=2,  # Speak count not working for urdu now
         sample_rate_hertz=48000,  # audio sampel rage
-        audio_channel_count=2)  # number of chanel used in aud
+        audio_channel_count=1)  # number of chanel used in aud
 
     operation = client.long_running_recognize(config, audio)
     response = operation.result(timeout=10000)
@@ -114,6 +115,18 @@ def transcriber(blob_name, datee, bob_url, posts):
         'urll': bob_url
 
     })
+
+    conn = pyodbc.connect('Driver={SQL Server};'
+                      'Server=vcoe1.aku.edu;' # server name
+                      'Database=cmapp;'      # DB Name 
+                      'uid=coe1;'
+                      'pwd=coe1.aku;')
+
+    cursor = conn.cursor()
+   
+    cursor.execute("INSERT INTO Table_1 (transcription,id,date_upload) VALUES (?,?,?) ",(transcrip,blob_name,datee))
+    conn.commit()
+    conn.close()
     # return posts
 
 
@@ -157,8 +170,8 @@ def transcriberDetail(blob_name, main):
 
   # })
 
-    #urll = 'gs://bucketirfansyed/SSR_8102019114925.wav'
-    urll = 'gs://bucketirfansyed/' + blob_name
+    #urll = 'gs://bucketgcssr/SSR_8102019114925.wav'
+    urll = 'gs://bucketgcssr/' + blob_name
     from google.cloud import speech_v1p1beta1 as speech  # GCP api
     client = speech.SpeechClient()
 
@@ -170,7 +183,7 @@ def transcriberDetail(blob_name, main):
         enable_speaker_diarization=True,  # speaker diaraziation not working for urdu for now
         diarization_speaker_count=2,  # Speak count not working for urdu now
         sample_rate_hertz=48000,  # audio sampel rage
-        audio_channel_count=2)  # number of chanel used in aud
+        audio_channel_count=1)  # number of chanel used in aud
 
     operation = client.long_running_recognize(config, audio)
     response = operation.result(timeout=10000)
