@@ -116,11 +116,23 @@ def transcriber(blob_name, datee, bob_url, posts):
 
     })
 
+   # conn = pyodbc.connect('DRIVER={SQL Server};SERVER=server.domain.local;
+    #PORT=1433;UID=DOMAIN\user;PWD=mypassword;DATABASE=mydatabasename;
+   ## UseNTLMv2=yes;
+   # TDS_Version=8.0;
+   # Trusted_Domain=domain.local;')
+
     conn = pyodbc.connect('Driver={SQL Server};'
                       'Server=vcoe1.aku.edu;' # server name
                       'Database=cmapp;'      # DB Name 
                       'uid=coe1;'
-                      'pwd=coe1.aku;')
+                      'pwd=coe1.aku;'
+                      'PORT=1433;'
+                      'UseNTLMv2=yes;'
+                      'TDS_Version=8.0;'
+                      'Trusted_Domain=domain.local;'
+                      )
+                      
 
     cursor = conn.cursor()
    
