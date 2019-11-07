@@ -124,7 +124,7 @@ def transcriber(blob_name, datee, bob_url, posts):
 
     conn = pyodbc.connect('Driver={SQL Server};'
                       'Server=vcoe1.aku.edu;' # server name
-                      'Database=cmapp;'      # DB Name 
+                      'Database=cmapp;'      # DB Name Updated
                       'uid=coe1;'
                       'pwd=coe1.aku;'
                       'PORT=1433;'
