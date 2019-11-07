@@ -1,3 +1,10 @@
+from os import environ
+from django.db import models
+from django.core.files.storage import default_storage
+from google.cloud import pubsub_v1  # Google cloud publication subscribion library
+import time           # time date libarary
+import json           # Json paring
+from google.cloud import storage  # Cloud storage GCP
 from django.shortcuts import render
 from django.http import HttpResponse
 import argparse  # for Parsing
@@ -7,18 +14,13 @@ import wave      # Audio stero to mono
 from django.contrib import messages
 import pyodbc
 
+import mysql.connector
 
 bucketname = 'bucketgcssr'   # bucket name at google cloud
-from google.cloud import storage  # Cloud storage GCP
 
-import json           # Json paring
-import time           # time date libarary
-from google.cloud import pubsub_v1  # Google cloud publication subscribion library
-from django.core.files.storage import default_storage
-from django.db import models
-from os import environ
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcpcri.json"  # JSON file Google cloud auttenticaion
+# JSON file Google cloud auttenticaion
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcpcri.json"
 
 
 class Resume(models.Model):
@@ -41,7 +43,7 @@ def button_click(request):
         'posts': posts
 
     }
-    #(request,the blog i am requestin,my json object)
+    # (request,the blog i am requestin,my json object)
     return render(request, 'blog/translation.html', context)
 
 
@@ -54,7 +56,7 @@ def translation(request):
         'posts': posts
 
     }
-    #(request,the blog i am requestin,my json object)
+    # (request,the blog i am requestin,my json object)
     return render(request, 'blog/translation.html', context)
     # return render(request, 'blog/translation.html', {'tital': 'translation'})
 
@@ -91,7 +93,8 @@ def transcriber(blob_name, datee, bob_url, posts):
         encoding=speech.enums.RecognitionConfig.AudioEncoding.LINEAR16,
 
         language_code='ur-PK',  # language code
-        enable_speaker_diarization=True,  # speaker diaraziation not working for urdu for now
+        # speaker diaraziation not working for urdu for now
+        enable_speaker_diarization=True,
         diarization_speaker_count=2,  # Speak count not working for urdu now
         sample_rate_hertz=48000,  # audio sampel rage
         audio_channel_count=1)  # number of chanel used in aud
@@ -116,15 +119,27 @@ def transcriber(blob_name, datee, bob_url, posts):
 
     })
 
-   # conn = pyodbc.connect('DRIVER={SQL Server};SERVER=server.domain.local;
-    #PORT=1433;UID=DOMAIN\user;PWD=mypassword;DATABASE=mydatabasename;
-   ## UseNTLMv2=yes;
-   # TDS_Version=8.0;
-   # Trusted_Domain=domain.local;')
+    mydb = mysql.connector.connect(
+        host="precision.org.pk",
+        user="precisi4_irfan",
+        passwd="d6=P;rOz#Qj8",
+        database="precisi4_ssr"
+    )
 
-    conn = pyodbc.connect('Driver={SQL Server};'
-                      'Server=vcoe1.aku.edu;' # server name
-                      'Database=cmapp;'      # DB Name Updated
+    mycursor = mydb.cursor()
+
+
+    sql = "INSERT INTO ssrData (audioName, translation) VALUES (%s, %s)"
+    val = (transcrip, blob_name)
+    mycursor.execute(sql, val)
+
+    mydb.commit()
+
+# password d6=P;rOz#Qj8
+"""
+conn = pyodbc.connect('Driver={SQL Server};'
+                      'Server=vcoe1.aku.edu;'  # server name
+                      'Database=cmapp;'       # DB Name Updated
                       'uid=coe1;'
                       'pwd=coe1.aku;'
                       'PORT=1433;'
@@ -132,15 +147,15 @@ def transcriber(blob_name, datee, bob_url, posts):
                       'TDS_Version=8.0;'
                       'Trusted_Domain=domain.local;'
                       )
-                      
 
-    cursor = conn.cursor()
-   
-    cursor.execute("INSERT INTO Table_1 (transcription,id,date_upload) VALUES (?,?,?) ",(transcrip,blob_name,datee))
-    conn.commit()
-    conn.close()
-    # return posts
+cursor = conn.cursor()
 
+cursor.execute("INSERT INTO Table_1 (transcription,id,date_upload) VALUES (?,?,?) ",
+               (transcrip, blob_name, datee))
+conn.commit()
+conn.close()
+# return posts
+"""
 
 # for detail Speech to text
 
@@ -166,7 +181,7 @@ def detial_click(request):
 
 
     }
-    #(request,the blog i am requestin,my json object)
+    # (request,the blog i am requestin,my json object)
     return render(request, 'blog/translationdetail.html', context)
 
 
@@ -192,7 +207,8 @@ def transcriberDetail(blob_name, main):
         encoding=speech.enums.RecognitionConfig.AudioEncoding.LINEAR16,
 
         language_code='ur-PK',  # language code
-        enable_speaker_diarization=True,  # speaker diaraziation not working for urdu for now
+        # speaker diaraziation not working for urdu for now
+        enable_speaker_diarization=True,
         diarization_speaker_count=2,  # Speak count not working for urdu now
         sample_rate_hertz=48000,  # audio sampel rage
         audio_channel_count=1)  # number of chanel used in aud
