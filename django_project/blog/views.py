@@ -1,18 +1,18 @@
 from os import environ
 from django.db import models
-from django.core.files.storage import default_storage
-from google.cloud import pubsub_v1  # Google cloud publication subscribion library
+#from django.core.files.storage import default_storage
+#from google.cloud import pubsub_v1  # Google cloud publication subscribion library
 import time           # time date libarary
 import json           # Json paring
 from google.cloud import storage  # Cloud storage GCP
 from django.shortcuts import render
-from django.http import HttpResponse
-import argparse  # for Parsing
+#from django.http import HttpResponse
+#import argparse  # for Parsing
 import io        # seting eniromental variable
 import os        # setting enivromental varible
-import wave      # Audio stero to mono
-from django.contrib import messages
-import pyodbc
+
+
+
 
 import mysql.connector
 
@@ -48,7 +48,7 @@ def button_click(request):
 
     }
     # (request,the blog i am requestin,my json object)
-    return render(request, 'blog/home.html', context)
+    return render(request, 'blog/translation.html', context)
 
 
 def translation(request):
@@ -83,26 +83,27 @@ def get_buckets(flgBtnClick):
     posts = []
     for blob in blobs:
         # print(blob.name)
-        if blob.name not in myql_list:
-            blob.make_public()
-            if flgBtnClick=='1':
+        
+        if flgBtnClick=='1':
+            if blob.name not in myql_list:
+                blob.make_public()
                 transcriber(blob.name, blob.updated, blob.public_url, posts)
-            get_data_mysql_p1(posts)
-
+                
+    get_data_mysql_p1(posts)
+ 
     return posts
+
 
 # get audio names from mysql for checking weather trancribed or not
 def get_AudioName_mysql():
- 
-
 
     mycursor = mydb.cursor()
-    sql = "select file from audios where status=1"
+    sql = "select audioName from ssrDataa"
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
     my_list = []
     for x in myresult:
-        my_list.append(x)
+        my_list.append(x[0])
 
     return my_list    
 
@@ -116,7 +117,6 @@ def get_data_mysql_p1(posts):
     sql = "select * from ssrDataa"
     mycursor.execute(sql)
     myresult = mycursor.fetchall()
-    my_list = []
     for x in myresult:
          posts.append({
         'author': x[0],
@@ -178,9 +178,9 @@ def transcriber(blob_name, datee, bob_url, posts):
     mycursor.execute(sql, val)
     mydb.commit()
 
-    sql = "UPDATE audios SET status ='2' where file='"+blob_name+"'"
-    mycursor.execute(sql)
-    mydb.commit()
+   # sql = "UPDATE audios SET status ='2' where file='"+blob_name+"'"
+    #mycursor.execute(sql)
+    #mydb.commit()
   
 
 # password d6=P;rOz#Qj8
