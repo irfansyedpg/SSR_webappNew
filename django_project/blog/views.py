@@ -10,7 +10,8 @@ from django.shortcuts import render
 #import argparse  # for Parsing
 import io        # seting eniromental variable
 import os        # setting enivromental varible
-
+import xlwt
+from django.http import HttpResponse
 
 
 
@@ -129,6 +130,8 @@ def get_data_mysql_p1(posts):
 
 
 # translation page get data from mysql ............................. ends ....................
+
+
      # actual transcribe founciton to sent request to the server and store data in mysql 
 def transcriber(blob_name, datee, bob_url, posts):
 
@@ -219,6 +222,17 @@ def detial_click(request):
 
 def transcriberDetail(blob_name, main):
 
+
+
+    #check if already Inserted to ssrDictionary using audio name/blobname
+    flagDntInst = 0
+    mycursor = mydb.cursor()
+    sql = "select  audioName from ssrDictionary where audioName='"+blob_name+"' LIMIT 3"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    for x in myresult:
+        flagDntInst=1
+
     posts = []
 
     #urll = 'gs://bucketgcssr/SSR_8102019114925.wav'
@@ -260,9 +274,74 @@ def transcriberDetail(blob_name, main):
                 'start_time': start_time.seconds + start_time.nanos * 1e-9,
                 'end_time': end_time.seconds + end_time.nanos * 1e-9,
                 'confidence': confidence
+
+
             })
+                   #insertion to Mysql For WordDictionary here
+            if flagDntInst==0:
+                sql = "INSERT INTO ssrDictionary (words,audioName, confidance,endTime,startTime) VALUES (%s, %s, %s, %s, %s)"
+                val = (word,blob_name,confidence,end_time.seconds + end_time.nanos * 1e-9,start_time.seconds + start_time.nanos * 1e-9)
+                mycursor.execute(sql, val)
+                mydb.commit()  
 
     return posts
 
 
+
+
+
 # word level confidance ends here .........................ends..................
+
+
+
+# download data from in excel formate
+
+def download_excel_data(request):
+	# content-type of response
+	response = HttpResponse(content_type='application/ms-excel')
+
+	#decide file name
+	response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
+
+	#creating workbook
+	wb = xlwt.Workbook(encoding='utf-8')
+
+	#adding sheet
+	ws = wb.add_sheet("sheet1")
+
+	# Sheet header, first row
+	row_num = 0
+
+	font_style = xlwt.XFStyle()
+	# headers are bold
+	font_style.font.bold = True
+
+	#column header names, you can use your own headers here
+	columns = ['Transcription Name', 'Word', 'Confidance', 'Start Time','End  Time', ]
+
+	#write column headers in sheet
+	for col_num in range(len(columns)):
+		ws.write(row_num, col_num, columns[col_num], font_style)
+
+	# Sheet body, remaining rows
+	font_style = xlwt.XFStyle()
+
+	#get your data, from database or from a text file...
+	data = get_data() #dummy method to fetch data.
+    
+	for my_row in data:
+		row_num = row_num + 1
+		ws.write(row_num, 0, my_row[0], font_style)
+		ws.write(row_num, 1, my_row[1], font_style)
+		ws.write(row_num, 2, my_row[2], font_style)
+		ws.write(row_num, 3, my_row[3], font_style)
+  
+
+	wb.save(response)
+	return response
+def get_data():
+    mycursor = mydb.cursor()
+    sql = "select  * from ssrDictionary "
+    mycursor.execute(sql)
+    data = mycursor.fetchall()
+    return data    
