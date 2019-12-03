@@ -272,7 +272,7 @@ def transcriberDetail(blob_name, main):
             'blob_name': blob_name,
             'confidence': confidence})
         for word_info in alternative.words:
-            confidence = form(word_info.confidence)
+            confidence = format(word_info.confidence)
             word = word_info.word
             start_time = word_info.start_time
             end_time = word_info.end_time
@@ -362,7 +362,7 @@ def download_excel_transcription(request):
     response = HttpResponse(content_type='application/ms-excel')
 
     # decide file name
-    response['Content-Disposition'] = 'attachment; filename="SSRWordDictinary.xls"'
+    response['Content-Disposition'] = 'attachment; filename="SSRTranslation.xls"'
 
     # creating workbook
     wb = xlwt.Workbook(encoding='utf-8')
@@ -390,7 +390,7 @@ def download_excel_transcription(request):
 
     # get your data, from database or from a text file...
 
-    for my_row in lstTranslation:
+    for my_row in lstAdName:
         row_num = row_num+1
         ws.write(row_num, 0, lstAdName[row_index], font_style)
         ws.write(row_num, 1, lstTranslation[row_index], font_style)
