@@ -189,6 +189,7 @@ def transcriber(blob_name, datee, bob_url, posts):
 
     #})
 
+	#updation
    # mycursor = mydb.cursor()
 
     sql = "INSERT INTO ssrDataa (audioName, translation,datee,confidence,pubUrl) VALUES (%s, %s, %s, %s, %s)"
