@@ -16,6 +16,7 @@ from django.http import HttpResponse
 
 import mysql.connector
 
+
 bucketname = 'bucketgcssr'   # bucket name at google cloud
 
 
@@ -33,6 +34,10 @@ mycursor = mydb.cursor()
 # JSON file Google cloud auttenticaion
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcpcri.json"
 
+
+# For urdu to english translation 
+from google.cloud import translate_v2 as translate
+translate_client = translate.Client()
 
 class Resume(models.Model):
     audio_file = models.FileField(upload_to='bucketgcssr')
@@ -135,15 +140,21 @@ def get_data_mysql_p1(posts):
         lstConfidance.append(x[3])
         lstDate.append(x[2])
         lstUrl.append(x[4])
-
+     
+   
         posts.append({
             'author': x[0],
             'content': x[1],
             'date_posted': x[2],
             'confidence': x[3],
             'urll': x[4],
+            'tranlsation': x[5],
 
         })
+        
+   
+
+ 
 
     mydb.close()
 
@@ -191,10 +202,13 @@ def transcriber(blob_name, datee, bob_url, posts):
 
 	#updation
    # mycursor = mydb.cursor()
+    result = translate_client.translate(
+    transcrip, target_language='en')
+    tranlsationenglish=result['translatedText']
 
-    sql = "INSERT INTO ssrDataa (audioName, translation,datee,confidence,pubUrl) VALUES (%s, %s, %s, %s, %s)"
+    sql = "INSERT INTO ssrDataa (audioName, translation,datee,confidence,pubUrl,englishtranslation) VALUES (%s, %s, %s, %s, %s, %s)"
     mydb._open_connection()
-    val = (blob_name, transcrip, datee, str(confidence / i), bob_url)
+    val = (blob_name, transcrip, datee, str(confidence / i), bob_url,tranlsationenglish)
     mycursor.execute(sql, val)
     mydb.commit()
     mydb.close()
