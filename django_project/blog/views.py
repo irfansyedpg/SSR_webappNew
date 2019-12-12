@@ -14,6 +14,9 @@ import xlwt
 from django.http import HttpResponse
 
 
+
+
+
 import mysql.connector
 
 
@@ -152,7 +155,7 @@ def get_data_mysql_p1(posts):
 
         })
         
-   
+#NLP
 
  
 
