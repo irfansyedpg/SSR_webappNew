@@ -20,12 +20,13 @@ from django.http import HttpResponse
 import mysql.connector
 
 
-bucketname = 'bucketgcssr'   # bucket name at google cloud
+bucketname = 'bucketssr'   # bucket name at google cloud
 
 
 # SQL Connection String strats
 mydb = mysql.connector.connect(
-    host="precision.org.pk",
+   # host="precision.org.pk",
+    host="35.226.163.82",
     user="precisi4_irfan",
     passwd="d6=P;rOz#Qj8",
     database="precisi4_ssr"
@@ -43,10 +44,10 @@ from google.cloud import translate_v2 as translate
 translate_client = translate.Client()
 
 class Resume(models.Model):
-    audio_file = models.FileField(upload_to='bucketgcssr')
+    audio_file = models.FileField(upload_to='bucketssr')
 
 
-bucketName = environ.get('bucketgcssr')
+bucketName = environ.get('bucketssr')
 
 
 # json object to go to translation page
@@ -87,7 +88,7 @@ def get_buckets(flgBtnClick):
 
     # https://medium.com/p/1dbcab23c44/responses/show
     storage_client = storage.Client.from_service_account_json('gcpcri.json')
-    bucket = storage_client.get_bucket('bucketgcssr')
+    bucket = storage_client.get_bucket('bucketssr')
 
     blobs = bucket.list_blobs()
 
@@ -167,8 +168,8 @@ def get_data_mysql_p1(posts):
     # actual transcribe founciton to sent request to the server and store data in mysql
 def transcriber(blob_name, datee, bob_url, posts):
 
-    # urll = 'gs://bucketgcssr/SSR_8102019114925.wav'
-    urll = 'gs://bucketgcssr/' + blob_name
+    # urll = 'gs://bucketssr/SSR_8102019114925.wav'
+    urll = 'gs://bucketssr/' + blob_name
     from google.cloud import speech_v1p1beta1 as speech  # GCP api
     client = speech.SpeechClient()
 
@@ -176,7 +177,8 @@ def transcriber(blob_name, datee, bob_url, posts):
     config = speech.types.RecognitionConfig(
         encoding=speech.enums.RecognitionConfig.AudioEncoding.LINEAR16,
 
-        language_code='ur-PK',  # language code
+        #language_code='ur-PK',  # language code
+        language_code='ur-in',  # language code
         # speaker diaraziation not working for urdu for now
         enable_speaker_diarization=True,
         diarization_speaker_count=2,  # Speak count not working for urdu now
@@ -260,8 +262,8 @@ def transcriberDetail(blob_name, main):
 
     posts = []
 
-    # urll = 'gs://bucketgcssr/SSR_8102019114925.wav'
-    urll = 'gs://bucketgcssr/' + blob_name
+    # urll = 'gs://bucketssr/SSR_8102019114925.wav'
+    urll = 'gs://bucketssr/' + blob_name
     from google.cloud import speech_v1p1beta1 as speech  # GCP api
     client = speech.SpeechClient()
 
@@ -269,7 +271,8 @@ def transcriberDetail(blob_name, main):
     config = speech.types.RecognitionConfig(
         encoding=speech.enums.RecognitionConfig.AudioEncoding.LINEAR16,
 
-        language_code='ur-PK',  # language code
+        #language_code='ur-PK',  # language code
+        language_code='ur-in',  # language code
         # speaker diaraziation not working for urdu for now
         enable_speaker_diarization=True,
         diarization_speaker_count=2,  # Speak count not working for urdu now
