@@ -127,4 +127,4 @@ DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 GS_BUCKET_NAME = 'bucketirfansyed'
 
 
-GS_CREDENTIALS = service_account.Credentials.from_service_account_file("gcpcri.json")
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file("newjsonkey.json")

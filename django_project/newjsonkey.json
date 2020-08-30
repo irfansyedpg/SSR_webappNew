@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "twitionary",
+  "private_key_id": "b21d463527a3926b16c6aa8cc248cf258af5267e",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCmaTGUOsaGKa6X\n6PrkBd7TTe2UiSn7FRm2aochdUKAtncQn3DhRsLLT+CgQzZASbD/ft+8nTvywpY2\nHeTpHgTw8TJUTnhl69WZlDpSo/vd+k3WpO/POM7F7UfV2fRQWCQCMZNVYQZQRZhS\n7QVk9b+MfocrxEJLzsyVMl/+3mswADom+BY73UMdaK+R1d2eWgKgeReo7EwsbywA\nmHIzBxANIgI2gZKbq2pScgZ3dEY2nhOa8KUmRSUE+v49L3jSiL/3X6z8rYdsatsc\n15CE8CiNm2wDooAicCINDm8KS8YOSK8fMYPkEvZZNfJmxl8D4Zi77zNL5FiupIp6\nWmpNXkB9AgMBAAECggEAAgTGqDCqVdhNmOQnnvp/QHryhdnAG56e6DqUlxBQFTWh\nbh8xBFqSZFr8s5T9JHyAXCkS17vkjUZVAiUMsNM/ZhjW7nThOwNIXQuSRYxdssyl\ngxQPIKlkwLvnIi35q7vV+/zT97YsmG6vsVnUtevRPggO5bYEw9ynWKv6xCG4lSV2\nipeKDmJhjzBPOtURf5p/xgUmfnPHswozABz+qvba/l4qpx0PMeU6wm5BS+5eXOHE\nVt8eIQJoyUJoK/43kobmal53HsgWURIYUK5peYbzIwC3eRpxHlqSGlfDoYMCXytV\nJmknBHL7wgLM5b8bi3PZGZOHPgHZ5Dxe4kMicmkw4QKBgQDb9HadqEgg3S5bgU2F\nS1MrLJMerv5xXCIKIxSw9c2f+GMdy9pSSTj43tdQy07pI3FXCDCTYzKXIC/aN1Sw\nqtENlCEQuunDOox0a9lm6+1AxG0RI6SjZgYXrQB4IGs3G3/GNiY2S44AmJfG+Edi\nRu0jbIt5r0++cG8OcrKlBHPdiQKBgQDBrnRhvPs63MSotU6ZJ45JmZkrBCUxK8kY\nGrLW08H8Faj9HxK0QtqQeWVX6CXptrchesYv/YFkdfWB6/fnJplyOHSNCvSuP0K+\nrEAf9PhjIcgfrsBJUe2Yu4yGHs2Y348qrvwH2Ovv9T+HB3NND5XuQA17707CJQHs\nh894ys2iVQKBgQCbmLckVjwYC39Uuga1yZBfFVxJs29Jj+yAkUp82JWKmbK8DE44\nMZY8758Ph5Md97Wg5KlASkcqg1l2m/esNlpGqcguRptBQTTE0tprJXCjhZDGNBmu\ngWjD7N1NHVnbFPfxprKnbBFbOJb96PrOefAdRBbykOLvjCfz542akKjKSQKBgBaD\nct/RmdpzwyBhQuumn3GKuzU23CPlFREKOXOjVc85rVUPAZuWkdVtZwxa3d1W8d6g\naN03OI028PzTMxPZdsjCKzoh5eNDUzzaxPFyBlVvndWg+JUNQvMYCfOlLPzyL7Ak\newNmgbZ46ZOGmC6C+0ighXC8lokWyCx4dPNzj4epAoGBAMa+qaVfZeLJiex0Q9oh\nVy3AZrDU/kBcbLS/tru1BmYpONe0faWUgXzjXskXCVWVdltW124ONz+aV1q58wyw\nkPm4XDi5PZhAX8HnWwto/Y6D8reZCyH126XbbTnie3cMzlOX55zxUAbeYPSRtzDH\nMcizc+kxZbelULwOJDbZitop\n-----END PRIVATE KEY-----\n",
+  "client_email": "bucket@twitionary.iam.gserviceaccount.com",
+  "client_id": "114738285118477972311",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bucket%40twitionary.iam.gserviceaccount.com"
+}

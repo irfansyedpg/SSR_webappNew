@@ -20,13 +20,13 @@ from django.http import HttpResponse
 import mysql.connector
 
 
-bucketname = 'bucketssr'   # bucket name at google cloud
+bucketname = 'bucketssrr'   # bucket name at google cloud
 
 
 # SQL Connection String strats
 mydb = mysql.connector.connect(
-   # host="precision.org.pk",
-    host="35.226.163.82",
+    host="precision.org.pk",
+    #host="35.226.163.82",
     user="precisi4_irfan",
     passwd="d6=P;rOz#Qj8",
     database="precisi4_ssr"
@@ -36,7 +36,7 @@ mycursor = mydb.cursor()
 
 
 # JSON file Google cloud auttenticaion
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcpcri.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "newjsonkey.json"
 
 
 # For urdu to english translation 
@@ -44,10 +44,10 @@ from google.cloud import translate_v2 as translate
 translate_client = translate.Client()
 
 class Resume(models.Model):
-    audio_file = models.FileField(upload_to='bucketssr')
+    audio_file = models.FileField(upload_to='bucketssrr')
 
 
-bucketName = environ.get('bucketssr')
+bucketName = environ.get('bucketssrr')
 
 
 # json object to go to translation page
@@ -87,8 +87,8 @@ def home(request):
 def get_buckets(flgBtnClick):
 
     # https://medium.com/p/1dbcab23c44/responses/show
-    storage_client = storage.Client.from_service_account_json('gcpcri.json')
-    bucket = storage_client.get_bucket('bucketssr')
+    storage_client = storage.Client.from_service_account_json('newjsonkey.json')
+    bucket = storage_client.get_bucket('bucketssrr')
 
     blobs = bucket.list_blobs()
 
@@ -168,8 +168,8 @@ def get_data_mysql_p1(posts):
     # actual transcribe founciton to sent request to the server and store data in mysql
 def transcriber(blob_name, datee, bob_url, posts):
 
-    # urll = 'gs://bucketssr/SSR_8102019114925.wav'
-    urll = 'gs://bucketssr/' + blob_name
+    # urll = 'gs://bucketssrr/SSR_8102019114925.wav'
+    urll = 'gs://bucketssrr/' + blob_name
     from google.cloud import speech_v1p1beta1 as speech  # GCP api
     client = speech.SpeechClient()
 
@@ -262,8 +262,8 @@ def transcriberDetail(blob_name, main):
 
     posts = []
 
-    # urll = 'gs://bucketssr/SSR_8102019114925.wav'
-    urll = 'gs://bucketssr/' + blob_name
+    # urll = 'gs://bucketssrr/SSR_8102019114925.wav'
+    urll = 'gs://bucketssrr/' + blob_name
     from google.cloud import speech_v1p1beta1 as speech  # GCP api
     client = speech.SpeechClient()
 
