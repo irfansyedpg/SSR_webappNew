@@ -196,17 +196,7 @@ def transcriber(blob_name, datee, bob_url, posts):
         confidence = confidence + result.alternatives[0].confidence
         i = i + 1
 
-   # posts.append({
-    #    'author': blob_name,
-     #   'content': transcrip,
-     #   'date_posted': datee,
-      #  'confidence': str(confidence / i),
-       # 'urll': bob_url
 
-    #})
-
-	#updation
-   # mycursor = mydb.cursor()
     result = translate_client.translate(
     transcrip, target_language='en')
     tranlsationenglish=result['translatedText']
@@ -221,7 +211,12 @@ def transcriber(blob_name, datee, bob_url, posts):
 
 # for detail Speech to text
 
+#NLP
 
+from google.cloud import language
+from google.cloud.language import enums
+from google.cloud.language import types
+client = language.LanguageServiceClient()
 # here this is click when the user wants to go to next page for detail summary of text with word level confidacen
 def detial_click(request):
 
@@ -232,21 +227,50 @@ def detial_click(request):
 
     posts = []
     main = []
+    nlppart=[]
+    
     posts = transcriberDetail(bob_name, main)
+    #NLP here 
+    urdutext=main[0]['transcrip']
+    result = translate_client.translate(
+    urdutext, target_language='en')
+    tranlsationenglish=result['translatedText']
+
+    
+
+    document = language.types.Document(
+    content=tranlsationenglish,
+     type=language.enums.Document.Type.PLAIN_TEXT, )
+
+# Detects the sentiment of the text
+    response = client.analyze_entities(
+    document=document,
+     encoding_type='UTF32',
+    )
+    for entity in response.entities:
+        nlppart.append({
+            'word':entity.name,
+            'type':client.enums.Entity.Type(entity.type).name
+        })
+
 
     context = {
 
         'posts': posts,
         'main': main,
         'text': bob_name,
+        'textenglish':tranlsationenglish,
         'datee': datee,
         'audi_url': audi_url,
+        'nlppart':nlppart,
 
 
     }
     # (request,the blog i am requestin,my json object)
     return render(request, 'blog/translationdetail.html', context)
 
+def get_type(type):
+        return client.enums.Entity.Type(entity.type).name
 
 def transcriberDetail(blob_name, main):
 

@@ -14,39 +14,66 @@
 
 
   <h3 class="article-content" >{{ text }}</h3>
+  <h3 class="article-content" >{{ main.transcrip}}</h3>
+
+ 
    <p>
       <audio controls>
       <source src={{ audi_url }} type="audio/mpeg">
     </audio> </p>
+    <h4 class="article-content" >{{ textenglish }}</h4>
+    {% for post in main  %}
+    <h3 class="article-content" >{{ post.transcrip }}</h3>
+
+    <p class="article-content">Confidence: {{ post.confidence }}</p>
+    {% endfor %}
 </div>
 </article>
 
 
-{% for post in main  %}
-
-
-<article class="media content-section">
-  <div class="media-body">
 
 
 
-  <h3 class="article-content" >{{ post.transcrip }}</h3>
-  <p class="article-content">Confidence: {{ post.confidence }}</p>
-</div>
-</article>
-
-{% endfor %}
 
 
+
+
+
+<!-- this is NLP part  starts-->
+
+<div class="text-center"   style="margin-left: 20px; margin-right: 20px; " > 
+
+  <h1 class="article-content" >NLP Part</h1>
+  
+
+<table  id="example" class="table table-striped table-bordered text-center" >
+        <thead>
+            <tr>
+                <th>Words</th>
+                <th>Type</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in nlppart  %}
+            <tr>
+                <td>{{ post.word }}</td>
+                <td>{{ post.type }}</td>
+
+            </tr>
+            {% endfor %}
+     </tbody>
+   </table>
+ </div> 
+
+
+<!-- this is NLP part  ENDS-->
 
 <div class="text-center"   style="margin-left: 20px; margin-right: 20px; " > 
 
 
 
-  <form action='downloadexcel' method='GET'>
-
-    <button    class="article-title" type='submit'> Download in Excel </button>
-    </form>
+ 
 
 <table  id="example" class="table table-striped table-bordered text-center" >
         <thead>
@@ -69,6 +96,11 @@
             {% endfor %}
      </tbody>
    </table>
+   <form action='downloadexcel' method='GET'>
+
+    <button    class="article-title" type='submit'> Download in Excel </button>
+    </form>
+
  </div> 
 
 {% endblock content %}
