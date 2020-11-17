@@ -20,7 +20,7 @@ from django.http import HttpResponse
 import mysql.connector
 
 
-bucketname = 'bucketssrr'   # bucket name at google cloud
+bucketname = 'bucketssrrr'   # bucket name at google cloud
 
 
 # SQL Connection String strats
@@ -44,10 +44,10 @@ from google.cloud import translate_v2 as translate
 translate_client = translate.Client()
 
 class Resume(models.Model):
-    audio_file = models.FileField(upload_to='bucketssrr')
+    audio_file = models.FileField(upload_to='bucketssrrr')
 
 
-bucketName = environ.get('bucketssrr')
+bucketName = environ.get('bucketssrrr')
 
 
 # json object to go to translation page
@@ -88,7 +88,7 @@ def get_buckets(flgBtnClick):
 
     # https://medium.com/p/1dbcab23c44/responses/show
     storage_client = storage.Client.from_service_account_json('newjsonkey.json')
-    bucket = storage_client.get_bucket('bucketssrr')
+    bucket = storage_client.get_bucket('bucketssrrr')
 
     blobs = bucket.list_blobs()
 
@@ -168,8 +168,8 @@ def get_data_mysql_p1(posts):
     # actual transcribe founciton to sent request to the server and store data in mysql
 def transcriber(blob_name, datee, bob_url, posts):
 
-    # urll = 'gs://bucketssrr/SSR_8102019114925.wav'
-    urll = 'gs://bucketssrr/' + blob_name
+    # urll = 'gs://bucketssrrr/SSR_8102019114925.wav'
+    urll = 'gs://bucketssrrr/' + blob_name
     from google.cloud import speech_v1p1beta1 as speech  # GCP api
     client = speech.SpeechClient()
 
@@ -286,8 +286,8 @@ def transcriberDetail(blob_name, main):
 
     posts = []
 
-    # urll = 'gs://bucketssrr/SSR_8102019114925.wav'
-    urll = 'gs://bucketssrr/' + blob_name
+    # urll = 'gs://bucketssrrr/SSR_8102019114925.wav'
+    urll = 'gs://bucketssrrr/' + blob_name
     from google.cloud import speech_v1p1beta1 as speech  # GCP api
     client = speech.SpeechClient()
 
