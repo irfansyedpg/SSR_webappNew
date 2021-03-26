@@ -106,7 +106,7 @@ python-debian===0.1.36ubuntu1
 python-firebase==1.2
 python-jwt==3.2.6
 pytz==2019.3
-PyYAML==5.3.1
+PyYAML==5.4
 query-string==2019.4.13
 regex==2020.5.7
 requests==2.22.0
