@@ -63,7 +63,7 @@ lazr.uri==1.0.3
 lazy-object-proxy==1.4.3
 libcst==0.3.13
 linecache2==1.0.0
-lxml==4.5.0
+lxml==4.6.3
 MarkupPy==1.14
 MarkupSafe==1.1.0
 mccabe==0.6.1
