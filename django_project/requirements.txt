@@ -54,7 +54,7 @@ joblib==0.14.1
 jsonpatch==1.22
 jsonpointer==2.0
 jsonschema==3.2.0
-jwcrypto==0.7
+jwcrypto==1.4
 keyring==18.0.1
 language-selector==0.1
 launchpadlib==1.10.13
