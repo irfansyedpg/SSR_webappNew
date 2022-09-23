@@ -69,7 +69,7 @@ ply==3.8
 prometheus-client==0.4.2
 prompt-toolkit==2.0.7
 proto-google-cloud-pubsub-v1==0.15.4
-protobuf==3.8.0
+protobuf==3.18.3
 pyasn1==0.4.5
 pyasn1-modules==0.2.5
 PyAudio==0.2.11
