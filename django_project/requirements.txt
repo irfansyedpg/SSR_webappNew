@@ -133,7 +133,7 @@ textblob==0.15.3
 tqdm==4.46.0
 traceback2==1.4.0
 tweepy==3.8.0
-Twisted==18.9.0
+Twisted==22.10.0
 typing-extensions==3.7.4.3
 typing-inspect==0.6.0
 ubuntu-advantage-tools==20.3
